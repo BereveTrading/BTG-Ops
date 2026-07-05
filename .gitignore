@@ -1,0 +1,11 @@
+# secrets / local env — never commit
+*.env
+.env*
+*secret*
+*credential*
+*.key
+*.pem
+
+# editor / OS cruft
+*~
+.DS_Store
