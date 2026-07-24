@@ -5,6 +5,11 @@
 *credential*
 *.key
 *.pem
+*.passphrase
+
+# backup/drill run output — machine-local, not source
+db-backup/restore-drill.log
+db-backup/restore-drill-errors-*.log
 
 # editor / OS cruft
 *~
