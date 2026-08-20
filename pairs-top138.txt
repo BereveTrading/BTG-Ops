@@ -1,0 +1,36 @@
+# BTG ingest pair universe — ADDITIVE EXPANSION, pinned 2026-07-13
+# 138 Binance Spot USDT pairs total = the 50 pairs already live in
+# pairs-top50.txt (2026-07-06, Dean approved), UNCHANGED and kept verbatim
+# regardless of today's volume, PLUS 88 new pairs added on top.
+#
+# New-pair admission filter (applied to live api.binance.com/api/v3/exchangeInfo
+# + /api/v3/ticker/24hr, fetched 2026-07-13):
+#   - status == TRADING and isSpotTradingAllowed == true
+#   - quoteAsset == USDT
+#   - 24h quoteVolume >= $1,000,000  (liquidity floor — below this, 1m candles
+#     tend to have long flat/zero-volume stretches; not worth the ingest slot)
+#   - excludes leveraged tokens (*UP/*DOWN/*BULL/*BEAR)
+#   - excludes stablecoin/peg-vs-USDT pairs (USDC, FDUSD, USD1, RLUSD, XUSD,
+#     BFUSD, USDE, TUSD, USDP, FRAX, EUR, GBP, TRY, USD — no meaningful price
+#     action, would just be ~1.00 arb noise)
+#   - excludes one non-ASCII/garbled symbol found in the raw feed
+#   - tokenized-equity/commodity "xStock"-style pairs (e.g. SPCXB, SNDKB,
+#     CRCLB, MUB, QQQB, MSTRB, NVDAB, AMDB, TSLAB, SOXLB, INTCB, EWYB) are
+#     KEPT/ADMITTED — consistent with Dean's prior approval of this category
+#     in pairs-top50.txt.
+#
+# All 88 new base assets were checked against
+# apps/vision/src/frame/coinIcons.ts (the search/display logo gate) — ALL 88
+# have real logo coverage, so nothing here is chart-only/search-invisible.
+#
+# NOTE (flagged, not corrected here): UTKUSDT is present in the existing 50
+# but Binance reports it status=BREAK (halted) — it has been producing ZERO
+# rows in `ohlcv` since it was added. Left in place per additive-only scope;
+# Dean's call whether to drop it.
+#
+# NOT YET APPLIED to the live ingestd process or to ~/btg/ops/btg-db.env —
+# see feat/pair-universe-expansion branch notes / session report for the
+# sudo/restart-gated steps still needed.
+#
+# Source: api.binance.com/api/v3/exchangeInfo + /api/v3/ticker/24hr, 2026-07-13.
+BTCUSDT,ETHUSDT,SOLUSDT,XLMUSDT,XRPUSDT,ZECUSDT,BNBUSDT,DOGEUSDT,VANRYUSDT,NEARUSDT,TRXUSDT,ADAUSDT,TLMUSDT,WLDUSDT,SPCXBUSDT,PEPEUSDT,SUIUSDT,GRAMUSDT,AAVEUSDT,SYNUSDT,XPLUSDT,MUBUSDT,HMSTRUSDT,LTCUSDT,UUSDT,LINKUSDT,FETUSDT,ENAUSDT,BELUSDT,TAOUSDT,EPICUSDT,AIGENSYNUSDT,SNDKBUSDT,AVAXUSDT,BCHUSDT,PUMPUSDT,UTKUSDT,ONDOUSDT,ALLOUSDT,BONKUSDT,DEXEUSDT,GIGGLEUSDT,SENTUSDT,UNIUSDT,REUSDT,ALICEUSDT,CRCLBUSDT,TRUMPUSDT,TRBUSDT,PYTHUSDT,OPNUSDT,SXTUSDT,DODOUSDT,XECUSDT,KITEUSDT,XAUTUSDT,TREEUSDT,ARBUSDT,TUSDT,PAXGUSDT,DCRUSDT,OGNUSDT,OPUSDT,POLUSDT,JTOUSDT,FILUSDT,DOTUSDT,AGLDUSDT,JSTUSDT,TIAUSDT,HBARUSDT,DRAMBUSDT,LUMIAUSDT,PARTIUSDT,EWYBUSDT,DASHUSDT,APTUSDT,ICPUSDT,QQQBUSDT,VIRTUALUSDT,MEGAUSDT,INJUSDT,KAITOUSDT,PENGUUSDT,HEIUSDT,STRAXUSDT,ZAMAUSDT,ETHFIUSDT,ASTERUSDT,EIGENUSDT,MORPHOUSDT,HOTUSDT,SOXLBUSDT,SHIBUSDT,WBTCUSDT,RUNEUSDT,WLFIUSDT,FFUSDT,SPELLUSDT,ORDIUSDT,LDOUSDT,STORJUSDT,RENDERUSDT,ETCUSDT,AIUSDT,PYRUSDT,CHIPUSDT,BLURUSDT,ATMUSDT,OPGUSDT,CAKEUSDT,PENDLEUSDT,SKLUSDT,SNXUSDT,RIFUSDT,LUNCUSDT,ATOMUSDT,GALAUSDT,WIFUSDT,PLUMEUSDT,BIOUSDT,CFXUSDT,REDUSDT,ZENUSDT,CRVUSDT,SEIUSDT,ANKRUSDT,KATUSDT,ALGOUSDT,BANKUSDT,NILUSDT,TNSRUSDT,ZBTUSDT,DYDXUSDT,SKYUSDT,PUNDIXUSDT,USUALUSDT,CHZUSDT
