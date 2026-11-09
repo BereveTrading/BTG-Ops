@@ -1,0 +1,15 @@
+# FILE ONLY. Not installed, not enabled. Enabling is ZEN's decision (see README.md).
+# OnCalendar + Persistent=true: a missed run (machine off) fires at next start.
+# (Monotonic OnBootSec/OnUnitActiveSec timers do not re-arm after a manager restart here.)
+[Unit]
+Description=Weekly BTG level-up loop (Monday 03:30 UTC)
+Documentation=file:/home/dean/btg/ops/level-up/README.md
+
+[Timer]
+OnCalendar=Mon *-*-* 03:30:00 UTC
+Persistent=true
+RandomizedDelaySec=10min
+Unit=btg-level-up.service
+
+[Install]
+WantedBy=timers.target
