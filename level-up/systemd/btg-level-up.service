@@ -1,0 +1,24 @@
+# BTG level-up loop: 7 read-only reviewers + 1 merge reviewer, then a short notice to ZEN.
+# FILE ONLY. Not installed, not enabled. Enabling is ZEN's decision (see README.md).
+# No --build here: builders run only when ZEN adds --build to ExecStart.
+[Unit]
+Description=BTG level-up loop (review + merge, weekly)
+Documentation=file:/home/dean/btg/ops/level-up/README.md
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/dean/btg/ops/level-up
+ExecStart=/home/dean/btg/ops/level-up/run.sh --notify
+Environment=PATH=/home/dean/.local/bin:/usr/local/bin:/usr/bin:/bin
+Environment=HOME=/home/dean
+Nice=19
+IOSchedulingClass=idle
+CPUWeight=20
+MemoryHigh=10G
+MemoryMax=12G
+# 7 reviewers x 75 min + merge 60 min + load waits; run.sh also times out each agent.
+TimeoutStartSec=12h
+# Stop: SIGTERM to the whole unit (run.sh + its own agent), never anything outside it.
+KillMode=control-group
+TimeoutStopSec=90
